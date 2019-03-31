@@ -27,7 +27,10 @@ router.get('/another', (req, res) => {
 });
 router.post('/', (req, res) => res.json({ postBody: req.body }));
 
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use("/users", require("./routes/users"));
 app.use('/.netlify/functions/server', router);  // path must route to lambda
 
 module.exports = app;
