@@ -4,17 +4,6 @@ const serverless = require('serverless-http');
 const app = express();
 const bodyParser = require('body-parser');
 
-const cors = require("cors");
-const mongoose = require("mongoose");
-
-const config = require("./config");
-
-mongoose.Promise = global.Promise;
-mongoose
-  .connect(config.DB, { useNewUrlParser: true })
-  .then(() => console.log("Database is connected"))
-  .catch(err => console.log(`Cannot connect to the database ${err}`));
-
 const router = express.Router();
 router.get('/', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -23,7 +12,6 @@ router.get('/', (req, res) => {
 });
 router.get('/another', (req, res) => res.json({ route: req.originalUrl }));
 router.post('/', (req, res) => res.json({ postBody: req.body }));
-
 
 app.use(bodyParser.json());
 app.use('/.netlify/functions/server', router);  // path must route to lambda
