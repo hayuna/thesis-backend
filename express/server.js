@@ -3,6 +3,16 @@ const express = require('express');
 const serverless = require('serverless-http');
 const app = express();
 const bodyParser = require('body-parser');
+const cors = require("cors");
+const mongoose = require("mongoose");
+
+const config = require("./config");
+
+mongoose.Promise = global.Promise;
+mongoose
+  .connect(config.DB, { useNewUrlParser: true })
+  .then(() => console.log("Database is connected"))
+  .catch(err => console.log(`Cannot connect to the database ${err}`));
 
 const router = express.Router();
 router.get('/', (req, res) => {
